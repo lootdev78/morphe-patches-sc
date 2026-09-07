@@ -7,14 +7,10 @@ package hoodles.morphe.patches.soundcloud.settings
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import hoodles.morphe.patches.shared.misc.extension.activityOnCreateExtensionHook
-import hoodles.morphe.patches.shared.misc.extension.sharedExtensionPatch
+import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
 import hoodles.morphe.patches.soundcloud.shared.Constants
-
-private val extensionPatch = sharedExtensionPatch(
-    "soundcloud",
-    activityOnCreateExtensionHook("/RootActivity;")
-)
+import hoodles.morphe.patches.soundcloud.shared.soundcloudCorePatch
+import hoodles.morphe.patches.soundcloud.shared.soundcloudSettingsManifestPatch
 
 val soundcloudSettingsPatch = bytecodePatch(
     name = "SoundCloud Morphe Settings",
@@ -22,12 +18,14 @@ val soundcloudSettingsPatch = bytecodePatch(
 ) {
     compatibleWith(Constants.COMPATIBILITY)
 
-    dependsOn(extensionPatch)
+    dependsOn(soundcloudCorePatch, soundcloudSettingsManifestPatch)
 
     execute {
-        // Compose entry point hook
-        SettingsScreenFingerprint.method.addInstructions(0, """
-            # Render Morphe Settings entry in Compose
-        """.trimIndent())
+        val match = SettingsScreenFingerprint.instructionMatches[0]
+        val composerRegister = (match.instruction as FiveRegisterInstruction).registerC
+        SettingsScreenFingerprint.method.addInstructions(
+            match.index + 1,
+            "invoke-static {v$composerRegister}, Lapp/morphe/extension/soundcloud/MorpheSettingsCompose;->render(Landroidx/compose/runtime/Composer;)V"
+        )
     }
 }

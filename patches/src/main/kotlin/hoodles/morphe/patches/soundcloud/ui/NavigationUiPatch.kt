@@ -5,16 +5,14 @@
 
 package hoodles.morphe.patches.soundcloud.ui
 
+import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import hoodles.morphe.patches.shared.misc.extension.activityOnCreateExtensionHook
-import hoodles.morphe.patches.shared.misc.extension.sharedExtensionPatch
+import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
 import hoodles.morphe.patches.soundcloud.shared.Constants
+import hoodles.morphe.patches.soundcloud.shared.soundcloudCorePatch
 
-private val extensionPatch = sharedExtensionPatch(
-    "soundcloud",
-    activityOnCreateExtensionHook("/RootActivity;")
-)
+private const val UI = "Lapp/morphe/extension/soundcloud/MorpheUiVisibility;"
 
 val soundcloudNavigationUiPatch = bytecodePatch(
     name = "Hide navigation bar elements",
@@ -22,22 +20,33 @@ val soundcloudNavigationUiPatch = bytecodePatch(
 ) {
     compatibleWith(Constants.COMPATIBILITY)
 
-    dependsOn(extensionPatch)
+    dependsOn(soundcloudCorePatch)
 
     execute {
-        // Hide Upload button
-        TitleBarUploadFingerprint.method.addInstructions(0, """
-            # Intercept upload menu item visibility
-        """.trimIndent())
+        fun patchMenuVisibility(fingerprint: Fingerprint, extensionMethod: String) {
+            val match = fingerprint.instructionMatches[0]
+            val visibilityRegister = (match.instruction as FiveRegisterInstruction).registerD
+            fingerprint.method.addInstructions(
+                match.index,
+                """
+                    invoke-static {}, $UI->$extensionMethod()Z
+                    move-result v$visibilityRegister
+                """.trimIndent()
+            )
+        }
 
-        // Hide Inbox button
-        TitleBarInboxFingerprint.method.addInstructions(0, """
-            # Intercept inbox menu item visibility
-        """.trimIndent())
+        patchMenuVisibility(TitleBarActivityFeedFingerprint, "shouldShowNotification")
+        patchMenuVisibility(TitleBarInboxFingerprint, "shouldShowInbox")
+        patchMenuVisibility(TitleBarUploadFingerprint, "shouldShowUpload")
+        patchMenuVisibility(CastMenuItemFingerprint, "shouldShowCast")
 
-        // Hide Notification bell
-        TitleBarActivityFeedFingerprint.method.addInstructions(0, """
-            # Intercept notification menu item visibility
-        """.trimIndent())
+        CastButtonFingerprint.let { fingerprint ->
+            val match = fingerprint.instructionMatches[0]
+            val viewRegister = (match.instruction as FiveRegisterInstruction).registerC
+            fingerprint.method.addInstructions(
+                match.index + 1,
+                "invoke-static {v$viewRegister}, $UI->applyCastButtonVisibility(Landroid/view/View;)V"
+            )
+        }
     }
 }

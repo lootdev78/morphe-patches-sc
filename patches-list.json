@@ -2075,7 +2075,8 @@
       "description": "Adds Morphe Settings menu directly into SoundCloud settings screen.",
       "default": true,
       "dependencies": [
-        "BytecodePatch"
+        "BytecodePatch",
+        "ResourcePatch"
       ],
       "compatiblePackages": [
         {

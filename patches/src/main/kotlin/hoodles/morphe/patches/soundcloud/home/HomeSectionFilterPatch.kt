@@ -7,14 +7,9 @@ package hoodles.morphe.patches.soundcloud.home
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import hoodles.morphe.patches.shared.misc.extension.activityOnCreateExtensionHook
-import hoodles.morphe.patches.shared.misc.extension.sharedExtensionPatch
+import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
 import hoodles.morphe.patches.soundcloud.shared.Constants
-
-private val extensionPatch = sharedExtensionPatch(
-    "soundcloud",
-    activityOnCreateExtensionHook("/RootActivity;")
-)
+import hoodles.morphe.patches.soundcloud.shared.soundcloudCorePatch
 
 val soundcloudHomeSectionFilterPatch = bytecodePatch(
     name = "Filter home sections",
@@ -22,11 +17,17 @@ val soundcloudHomeSectionFilterPatch = bytecodePatch(
 ) {
     compatibleWith(Constants.COMPATIBILITY)
 
-    dependsOn(extensionPatch)
+    dependsOn(soundcloudCorePatch)
 
     execute {
-        SDUIToHomeResultsFingerprint.method.addInstructions(0, """
-            # Filter SDUI sections if data is loaded
-        """.trimIndent())
+        val match = SDUIToHomeResultsFingerprint.instructionMatches[0]
+        val listRegister = (match.instruction as TwoRegisterInstruction).registerA
+        SDUIToHomeResultsFingerprint.method.addInstructions(
+            match.index + 1,
+            """
+                invoke-static {v$listRegister}, Lapp/morphe/extension/soundcloud/HomeSectionFilter;->filter(Ljava/util/List;)Ljava/util/List;
+                move-result-object v$listRegister
+            """.trimIndent()
+        )
     }
 }

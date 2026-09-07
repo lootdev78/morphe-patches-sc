@@ -7,14 +7,8 @@ package hoodles.morphe.patches.soundcloud.premium
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import hoodles.morphe.patches.shared.misc.extension.activityOnCreateExtensionHook
-import hoodles.morphe.patches.shared.misc.extension.sharedExtensionPatch
 import hoodles.morphe.patches.soundcloud.shared.Constants
-
-private val extensionPatch = sharedExtensionPatch(
-    "soundcloud",
-    activityOnCreateExtensionHook("/RootActivity;")
-)
+import hoodles.morphe.patches.soundcloud.shared.soundcloudCorePatch
 
 val enablePremiumPatch = bytecodePatch(
     name = "Enable SoundCloud Go",
@@ -22,7 +16,7 @@ val enablePremiumPatch = bytecodePatch(
 ) {
     compatibleWith(Constants.COMPATIBILITY)
 
-    dependsOn(extensionPatch)
+    dependsOn(soundcloudCorePatch)
 
     execute {
         // Force Features to be enabled

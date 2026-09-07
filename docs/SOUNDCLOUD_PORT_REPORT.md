@@ -38,5 +38,9 @@ Hook call sites:
 APK decompile: OK
 Smali extraction: OK
 Manifest extraction: OK
+Runtime payload: 165/165 classes, valid DEX header/checksum/signature
+Target fingerprints: 21/21 hook points resolved for `2026.08.26-release`
+Inline Smali: no comment-only `addInstructions` blocks remain
+Patched reference Smali assembly: OK
 
 Remaining validation requires building the Morphe patch repository with the exact Morphe SDK version used by the target build.
