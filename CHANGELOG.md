@@ -1,3 +1,10 @@
+# 1.0.0 (2026-09-07)
+
+
+### Features
+
+* **soundcloud:** add download hook, home filter, navigation UI, and settings patches ([b4cb397](https://github.com/lootdev78/morphe-patches-sc/commit/b4cb397c54bdba93a67fd65724516a858998ee5d))
+
 # [1.43.0](https://github.com/hoo-dles/morphe-patches/compare/v1.42.0...v1.43.0) (2026-08-30)
 
 

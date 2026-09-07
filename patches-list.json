@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.43.0",
+  "version": "1.0.0",
   "patches": [
     {
       "name": "AMOLED dark theme",
@@ -1746,6 +1746,34 @@
       "options": []
     },
     {
+      "name": "Filter home sections",
+      "description": "Allows hiding customizable sections and carousels on the SoundCloud Home feed.",
+      "default": true,
+      "dependencies": [
+        "BytecodePatch"
+      ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.soundcloud.android",
+          "name": "SoundCloud",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#000000",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2026.08.26-release",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
       "name": "Force Native Keyboard",
       "description": "When typing in normal lessons, Eggbun forces you to use their own on-screen keyboard. This patches forces the use of the default OS keyboard.",
       "default": true,
@@ -1777,6 +1805,34 @@
       "default": false,
       "dependencies": [],
       "compatiblePackages": null,
+      "options": []
+    },
+    {
+      "name": "Hide navigation bar elements",
+      "description": "Allows hiding Cast, Upload, Messages, and Notification Bell icons from the top bar.",
+      "default": true,
+      "dependencies": [
+        "BytecodePatch"
+      ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.soundcloud.android",
+          "name": "SoundCloud",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#000000",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2026.08.26-release",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
       "options": []
     },
     {
@@ -2015,6 +2071,62 @@
       "options": []
     },
     {
+      "name": "SoundCloud Morphe Settings",
+      "description": "Adds Morphe Settings menu directly into SoundCloud settings screen.",
+      "default": true,
+      "dependencies": [
+        "BytecodePatch"
+      ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.soundcloud.android",
+          "name": "SoundCloud",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#000000",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2026.08.26-release",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "SoundCloud custom download routing",
+      "description": "Routes track and playlist download actions to an external downloader package.",
+      "default": true,
+      "dependencies": [
+        "BytecodePatch"
+      ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.soundcloud.android",
+          "name": "SoundCloud",
+          "description": null,
+          "apkFileType": null,
+          "appIconColor": "#000000",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "2026.08.26-release",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
       "name": "Unlimited skips",
       "description": "Disables the limit for skipping songs during playback.",
       "default": true,
@@ -2192,118 +2304,6 @@
           "targets": [
             {
               "version": "5.19.43.0",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "SoundCloud custom download routing",
-      "description": "Routes track and playlist download actions to an external downloader package.",
-      "default": true,
-      "dependencies": [
-        "BytecodePatch"
-      ],
-      "compatiblePackages": [
-        {
-          "packageName": "com.soundcloud.android",
-          "name": "SoundCloud",
-          "description": null,
-          "apkFileType": null,
-          "appIconColor": "#000000",
-          "signatures": null,
-          "targets": [
-            {
-              "version": "2026.08.26-release",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "Filter home sections",
-      "description": "Allows hiding customizable sections and carousels on the SoundCloud Home feed.",
-      "default": true,
-      "dependencies": [
-        "BytecodePatch"
-      ],
-      "compatiblePackages": [
-        {
-          "packageName": "com.soundcloud.android",
-          "name": "SoundCloud",
-          "description": null,
-          "apkFileType": null,
-          "appIconColor": "#000000",
-          "signatures": null,
-          "targets": [
-            {
-              "version": "2026.08.26-release",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "Hide navigation bar elements",
-      "description": "Allows hiding Cast, Upload, Messages, and Notification Bell icons from the top bar.",
-      "default": true,
-      "dependencies": [
-        "BytecodePatch"
-      ],
-      "compatiblePackages": [
-        {
-          "packageName": "com.soundcloud.android",
-          "name": "SoundCloud",
-          "description": null,
-          "apkFileType": null,
-          "appIconColor": "#000000",
-          "signatures": null,
-          "targets": [
-            {
-              "version": "2026.08.26-release",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "SoundCloud Morphe Settings",
-      "description": "Adds Morphe Settings menu directly into SoundCloud settings screen.",
-      "default": true,
-      "dependencies": [
-        "BytecodePatch"
-      ],
-      "compatiblePackages": [
-        {
-          "packageName": "com.soundcloud.android",
-          "name": "SoundCloud",
-          "description": null,
-          "apkFileType": null,
-          "appIconColor": "#000000",
-          "signatures": null,
-          "targets": [
-            {
-              "version": "2026.08.26-release",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": null,
